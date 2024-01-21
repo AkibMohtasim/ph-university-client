@@ -1,31 +1,32 @@
-import { Layout, Menu } from 'antd';
+import { Button, Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
-import { adminSidebarItems } from '../../routes/admin.route';
 
-const { Header, Content, Sider } = Layout;
+import Sidebar from './Sidebar';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/features/auth/authSlice';
+
+const { Header, Content } = Layout;
+
 
 
 
 const MainLayout = () => {
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  }
+
+
+
   return (
     <Layout style={{ height: '100vh' }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div style={{ color: 'white', height: '4rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <h1>Ph University</h1>
-        </div>
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={adminSidebarItems} />
-      </Sider>
+      <Sidebar />
       <Layout>
-        <Header style={{ padding: 0 }} />
+        <Header style={{ padding: 0 }}>
+          <Button onClick={handleLogout}>Logout</Button>
+        </Header>
         <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{
